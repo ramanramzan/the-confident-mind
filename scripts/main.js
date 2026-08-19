@@ -2,6 +2,20 @@ const menuToggle = document.querySelector('.menu-toggle');
 const nav = document.querySelector('.nav');
 
 if (menuToggle && nav) {
+  const navId = nav.id || 'site-nav';
+  nav.id = navId;
+  menuToggle.type = 'button';
+  menuToggle.setAttribute('aria-controls', navId);
+  menuToggle.setAttribute('aria-expanded', 'false');
+  menuToggle.setAttribute('aria-label', 'Open navigation');
+
+  const closeNav = () => {
+    nav.classList.remove('open');
+    menuToggle.setAttribute('aria-expanded', 'false');
+    menuToggle.setAttribute('aria-label', 'Open navigation');
+    menuToggle.textContent = '☰';
+  };
+
   menuToggle.addEventListener('click', () => {
     const open = nav.classList.toggle('open');
     menuToggle.setAttribute('aria-expanded', String(open));
@@ -9,12 +23,20 @@ if (menuToggle && nav) {
     menuToggle.textContent = open ? '×' : '☰';
   });
 
-  nav.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
-    nav.classList.remove('open');
-    menuToggle.setAttribute('aria-expanded', 'false');
-    menuToggle.setAttribute('aria-label', 'Open navigation');
-    menuToggle.textContent = '☰';
-  }));
+  nav.querySelectorAll('a').forEach(link => link.addEventListener('click', closeNav));
+
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && nav.classList.contains('open')) {
+      closeNav();
+      menuToggle.focus();
+    }
+  });
+
+  document.addEventListener('click', event => {
+    if (!nav.classList.contains('open')) return;
+    if (nav.contains(event.target) || menuToggle.contains(event.target)) return;
+    closeNav();
+  });
 }
 
 const quiz = document.querySelector('[data-confidence-quiz]');
