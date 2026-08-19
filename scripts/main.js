@@ -5,12 +5,14 @@ if (menuToggle && nav) {
   menuToggle.addEventListener('click', () => {
     const open = nav.classList.toggle('open');
     menuToggle.setAttribute('aria-expanded', String(open));
+    menuToggle.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation');
     menuToggle.textContent = open ? '×' : '☰';
   });
 
   nav.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
     nav.classList.remove('open');
     menuToggle.setAttribute('aria-expanded', 'false');
+    menuToggle.setAttribute('aria-label', 'Open navigation');
     menuToggle.textContent = '☰';
   }));
 }
@@ -114,6 +116,14 @@ if (quiz) {
     selfTrust: 'Self-Trust', approval: 'Approval Independence', boundaries: 'Boundaries', communication: 'Communication', discipline: 'Discipline'
   };
 
+  const dimensionMax = {
+    selfTrust: 16,
+    approval: 12,
+    boundaries: 8,
+    communication: 4,
+    discipline: 8
+  };
+
   function renderQuestion() {
     const q = questions[current];
     selected = null;
@@ -156,8 +166,8 @@ if (quiz) {
     resultMessage.textContent = message;
     nextStepEl.textContent = step;
     dimensionsEl.innerHTML = Object.entries(scores).map(([key, value]) => {
-      const pct = Math.round((value / 48) * 100);
-      return `<div class="dimension"><div class="dimension-head"><span>${labels[key]}</span><span>${Math.round((value / 48) * 100)}%</span></div><div class="dimension-track"><i style="width:${Math.min(pct * 1.6,100)}%"></i></div></div>`;
+      const pct = Math.round((value / dimensionMax[key]) * 100);
+      return `<div class="dimension"><div class="dimension-head"><span>${labels[key]}</span><span>${pct}%</span></div><div class="dimension-track"><i style="width:${pct}%"></i></div></div>`;
     }).join('');
     activeEl.style.display = 'none';
     resultEl.style.display = 'block';
