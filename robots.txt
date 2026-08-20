@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ramanramzan.github.io/the-confident-mind/sitemap.xml
