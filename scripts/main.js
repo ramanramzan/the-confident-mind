@@ -162,3 +162,56 @@ if (chips.length && cards.length) {
     });
   }));
 }
+
+
+// Premium UX: current navigation, reading progress, skip link, and subtle reveals.
+(() => {
+  const main = document.querySelector('main');
+  if (main && !main.id) main.id = 'main-content';
+
+  if (main && !document.querySelector('.skip-link')) {
+    const skip = document.createElement('a');
+    skip.className = 'skip-link';
+    skip.href = '#main-content';
+    skip.textContent = 'Skip to content';
+    document.body.insertBefore(skip, document.body.firstChild);
+  }
+
+  const currentFile = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
+  document.querySelectorAll('.nav a').forEach(link => {
+    const hrefFile = (link.getAttribute('href') || '').split('/').pop().toLowerCase();
+    if (hrefFile === currentFile) link.setAttribute('aria-current', 'page');
+  });
+
+  const article = document.querySelector('.article-body');
+  if (article) {
+    const bar = document.createElement('div');
+    bar.className = 'reading-progress';
+    bar.setAttribute('aria-hidden', 'true');
+    document.body.appendChild(bar);
+    const updateProgress = () => {
+      const rect = article.getBoundingClientRect();
+      const start = window.scrollY + rect.top - 110;
+      const end = start + article.offsetHeight - window.innerHeight * .55;
+      const pct = Math.max(0, Math.min(100, ((window.scrollY - start) / Math.max(1, end - start)) * 100));
+      bar.style.width = pct + '%';
+    };
+    updateProgress();
+    addEventListener('scroll', updateProgress, { passive: true });
+    addEventListener('resize', updateProgress);
+  }
+
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) {
+    const items = document.querySelectorAll('.card,.article-card,.belief,.test-panel,.free-feature-inner,.manifesto .narrow');
+    items.forEach(el => el.classList.add('reveal'));
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: .08, rootMargin: '0px 0px -30px 0px' });
+    items.forEach(el => observer.observe(el));
+  }
+})();
