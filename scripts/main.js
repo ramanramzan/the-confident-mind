@@ -215,3 +215,19 @@ if (chips.length && cards.length) {
     items.forEach(el => observer.observe(el));
   }
 })();
+
+// Legacy Systeme.io URL safety redirect.
+(() => {
+  const oldUrl = 'https://ramanramzan12.systeme.io/the-confident-mind';
+  const newUrl = 'https://ramanramzan12.systeme.io/confidence-reset';
+  document.querySelectorAll('a[href="' + oldUrl + '"]').forEach(link => {
+    link.href = newUrl;
+  });
+  document.addEventListener('click', event => {
+    const link = event.target.closest?.('a');
+    if (link && link.href === oldUrl) {
+      event.preventDefault();
+      window.location.href = newUrl;
+    }
+  }, true);
+})();
