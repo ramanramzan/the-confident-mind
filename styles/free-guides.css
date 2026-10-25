@@ -1,0 +1,23 @@
+.resources-page{padding:64px 0 96px}
+.resources-hero{max-width:790px;margin-bottom:40px}
+.resources-hero h1{font:500 clamp(42px,6vw,72px)/1.08 'Playfair Display',serif;letter-spacing:-.035em;margin:14px 0 20px}
+.resources-hero .lead{font-size:18px;color:var(--muted);line-height:1.75;max-width:700px}
+.resources-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+.resource-card{display:grid;grid-template-columns:minmax(120px,160px) minmax(0,1fr);gap:24px;align-items:start;padding:26px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(145deg,rgba(201,163,94,.055),rgba(255,255,255,.015))}
+.resource-cover-link{display:block;line-height:0;border-radius:8px;overflow:hidden;border:1px solid rgba(201,163,94,.3);box-shadow:0 16px 35px rgba(0,0,0,.3)}
+.resource-cover-link img{display:block;width:100%;height:auto}
+.resource-info{min-width:0}
+.resource-info .eyebrow{font-size:10px;letter-spacing:.12em}
+.resource-info h2{font:500 28px/1.15 'Playfair Display',serif;margin:12px 0 14px}
+.resource-info p,.resource-info li{font-size:14px;line-height:1.7;color:var(--muted)}
+.resource-info ul{padding-left:18px;margin:16px 0 20px}
+.resource-info .btn{font-size:12px;padding:14px 17px;white-space:normal;text-align:center}
+.resource-info .resource-access{font-size:12px;margin:12px 0 0}
+.resource-preview{display:inline-block;color:var(--gold-bright);font-size:13px;text-decoration:underline;text-underline-offset:4px;margin-top:14px}
+.resource-details{margin-top:36px;padding:24px;border:1px solid var(--line);border-radius:14px;max-width:850px}
+.resource-details summary{cursor:pointer;color:var(--gold-bright);font-weight:600;line-height:1.5}
+.resource-details li{color:var(--muted);font-size:15px;line-height:1.8;margin-top:10px}
+.resource-details ol{padding-left:22px;margin-top:22px}
+.resources-note{font-size:13px;color:var(--muted);max-width:800px;margin-top:28px;line-height:1.8}
+@media(max-width:1000px){.resource-card{grid-template-columns:1fr}.resource-cover-link{max-width:190px}.resource-info h2{font-size:30px}}
+@media(max-width:650px){.resources-page{padding:42px 0 64px}.resources-grid{grid-template-columns:1fr}.resource-card{padding:24px}.resource-cover-link{width:190px;max-width:100%;margin-inline:auto}.resource-info .btn{width:100%}.resources-hero .lead{font-size:16px}.resource-details{padding:20px}}
